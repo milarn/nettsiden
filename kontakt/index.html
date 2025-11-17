@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="no-NO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karriere | Cipher</title>
+    <link rel="icon" type="image/png" href="../bilder/logoside192.png">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX4GRPD3L6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TX4GRPD3L6');
+    </script>
+    <!-- End Google Analytics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #F5A28C; /* Oransj */
+            --primary-dark: #E07E68; /* Mørkere oransj */
+            --primary-light: #FFCEBF; /* Lysere oransj */
+            --secondary: #212338; /* Mørkeblå - primærfarge */
+            --secondary-dark: #171828; /* Mørkere blå */
+            --secondary-light: #353756; /* Lysere blå */
+            --secondary-lighter: #404466; /* Enda lysere blå */
+            --dark: #171721;
+            --light: #F8F9FA;
+            --gray: #6c757d;
+            --light-gray: #F2F2F2;
+            --white: #FFFFFF;
+            --gradient-blue: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            --gradient-orange: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --background: #2A2C44; /* Lysere bakgrunn enn original */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Digital particles animation */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+    
+        .particle {
+            position: absolute;
+            display: block;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+            animation: float-particle 20s ease-in-out infinite;
+        }
+        
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(50px, -30px);
+            }
+            50% {
+                transform: translate(20px, 50px);
+            }
+            75% {
+                transform: translate(-30px, 20px);
+            }
+        }
+
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .big-paragraph {
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 4px 14px rgba(245, 162, 140, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 162, 140, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-light);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(21, 23, 38, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(21, 23, 38, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+        
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+        
+        .btn-outline:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(245, 162, 140, 0.3);
+        }
+        
+        .btn-outline:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .text-primary {
+            color: var(--primary);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rounded-corners {
+            border-radius: 20px;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .z-index-10 {
+            z-index: 10;
+        }
+        
+        /* Animated decoration */
+        .animated-shape {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape1 {
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            bottom: -150px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.05);
+            }
+        }
+        
+        /* Header & Navigation */
+        .header {
+            background-color: rgba(42, 44, 68, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(42, 44, 68, 0.98);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 35px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+        
+        .header-cta {
+            margin-left: 30px;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+            font-size: 1.5rem;
+            position: relative;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            z-index: 101;
+            transition: all 0.3s ease;
+        }
+        
+        /* Hamburger icon with animated transition */
+        .hamburger-icon {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hamburger-icon .line {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            margin: 3px 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .mobile-toggle.active .hamburger-icon .line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .mobile-toggle.active .hamburger-icon .line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-toggle.active .hamburger-icon .line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Menu Footer (Mobile-only) */
+        .menu-footer {
+            display: none; /* Hide by default on desktop */
+        }
+        
+        /* Hero Section / Careers Header */
+        .careers-hero {
+            padding: 150px 0 80px; /* Reduced padding from 180px 0 100px */
+            position: relative;
+            overflow: hidden;
+            background-color: var(--background);
+            color: var(--white);
+            background-image: url('https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .careers-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 44, 68, 0.95), rgba(23, 24, 40, 0.85));
+            z-index: 1;
+        }
+        
+        .careers-hero-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 30px; /* Reduced from 50px */
+        }
+        
+        .careers-hero-content {
+            max-width: 600px;
+        }
+        
+        .careers-hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .careers-hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+            max-width: 90%;
+        }
+        
+        .careers-hero-image {
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            transition: all 0.3s ease;
+            max-height: 450px; /* Increased to show more of the image */
+        }
+        
+        .careers-hero-image:hover {
+            transform: perspective(1000px) rotateY(0) rotateX(0);
+        }
+        
+        .careers-hero-image img {
+            width: 100%;
+            height: 100%; /* Changed from 'auto' to '100%' */
+            display: block;
+            object-fit: cover; /* Added object-fit to maintain aspect ratio */
+            object-position: center 40%; /* Show more of the upper part */
+        }
+
+        .careers-cta {
+            margin: 30px 0;
+        }
+
+        .service-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .service-badge {
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .service-badge:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Open Positions Section */
+        .positions-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+            color: var(--secondary);
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-subtitle {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .positions-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .position-card {
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(33, 35, 56, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .position-card:hover {
+            background-color: var(--white);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .position-title {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .position-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .position-meta-item {
+            display: flex;
+            align-items: center;
+            color: rgba(33, 35, 56, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .position-meta-item i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .position-description {
+            margin-bottom: 20px;
+            color: rgba(33, 35, 56, 0.8);
+        }
+
+        .position-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .position-tag {
+            padding: 6px 12px;
+            background-color: rgba(245, 162, 140, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animation-fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        /* This enables animation only when element enters viewport with IntersectionObserver */
+        .animation-fade-in:not(.animate) {
+            animation: none;
+            opacity: 0;
+        }
+        
+        .animation-fade-in.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .animation-slide-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .animation-slide-up:not(.animate) {
+            animation: none;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .animation-slide-up.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.3s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.6s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.9s;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 35px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .dropdown-icon {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            margin-left: 3px;
+        }
+        
+        .dropdown.active .dropdown-icon {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--secondary);
+            min-width: 220px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 12px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 5;
+            margin-top: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            max-height: 0; /* Start with zero height for better animation */
+        }
+        
+        /* Desktop dropdown behavior */
+        @media (min-width: 769px) {
+            .dropdown:hover .dropdown-content,
+            .dropdown.hovered .dropdown-content {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                max-height: 500px;
+                padding: 12px 0;
+            }
+        }
+        
+        /* Mobile dropdown behavior - controlled by JS */
+        .dropdown.active .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transition: width 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--secondary-light);
+            color: var(--white);
+            padding-left: 25px;
+        }
+        
+        .dropdown-item:hover::before {
+            width: 3px;
+        }
+
+        .dropdown-item.active {
+            color: var(--primary);
+            background-color: rgba(245, 162, 140, 0.1);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            h1, .careers-hero-title {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .careers-hero-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .careers-hero-content {
+                text-align: center;
+                margin: 0 auto;
+            }
+            
+            .careers-cta {
+                justify-content: center;
+                display: flex;
+            }
+            
+            .service-badges {
+                justify-content: center;
+            }
+            
+            .careers-hero-image {
+                margin-top: 30px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+            
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .service-badges {
+                display: none; /* Hide service badges on mobile */
+            }
+            .header {
+                padding: 15px 0;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 98;
+            }
+            
+            .menu-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 85%;
+                height: 100vh;
+                background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+                flex-direction: column;
+                transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                padding: 80px 30px 40px;
+                z-index: 100;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+                overflow-y: auto;
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-link {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px 0;
+                font-size: 1.2rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-link:hover {
+                padding-left: 10px;
+                color: var(--primary);
+            }
+            
+            .nav-link::after {
+                display: none;
+            }
+            
+            .dropdown-toggle {
+                justify-content: space-between;
+                width: 100%;
+                display: flex;
+            }
+            
+            .dropdown-icon {
+                font-size: 1rem;
+            }
+            
+            .header-cta {
+                margin: 20px 0 0;
+                width: 100%;
+            }
+            
+            .header-cta .btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 1.1rem;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            }
+            
+            .header-cta .btn i {
+                margin-left: 10px;
+            }
+            
+            /* Menu Footer (Mobile only) */
+            .menu-footer {
+                display: block;
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                text-align: center;
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 0.9rem;
+            }
+            
+            .menu-contact-info {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .menu-contact-info a {
+                color: rgba(255, 255, 255, 0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+            
+            .menu-contact-info a i {
+                margin-right: 8px;
+                color: var(--primary);
+            }
+            
+            .menu-contact-info a:hover {
+                color: var(--primary);
+                transform: translateY(-2px);
+            }
+            
+            .section-heading {
+                margin-bottom: 40px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .animated-shape {
+                display: none;
+            }
+            
+            /* Mobile-Specific Dropdown Styles */
+            .dropdown-content {
+                position: static;
+                background-color: rgba(255, 255, 255, 0.05);
+                box-shadow: none;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                margin-top: 0;
+                border-radius: 8px;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                transition: max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+                border: none;
+                pointer-events: auto; /* Ensure clicks work on mobile */
+                width: 100%;
+                left: 0;
+                transform: translateX(0);
+            }
+            
+            .dropdown.active .dropdown-content {
+                max-height: 400px;
+                padding: 10px 0;
+                margin-top: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .dropdown-item {
+                padding: 12px 20px;
+                margin-left: 0;
+                font-size: 1rem;
+                border-left: 3px solid transparent;
+            }
+            
+            .dropdown-item:hover {
+                border-left: 3px solid var(--primary);
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+            
+            .dropdown-content::before {
+                display: none; /* Remove the dropdown arrow on mobile */
+            }
+
+            .careers-hero {
+                padding: 120px 0 60px;
+            }
+            
+            .careers-hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="../">
+                    <img src="../bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="menuToggle" aria-label="Menyknapp" aria-expanded="false">
+                <span class="hamburger-icon">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </span>
+            </button>
+            
+            <!-- Dark overlay when menu is open -->
+            <div class="menu-overlay" id="menuOverlay"></div>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="../" class="nav-link">Hjem</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">
+                            Våre tjenester
+                            <i class="dropdown-icon fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="../it-drift" class="dropdown-item">IT-drift</a>
+                            <a href="../sikkerhetstjenester" class="dropdown-item">Sikkerhetstjenester</a>
+                            <a href="../skytjenester" class="dropdown-item">Skytjenester</a>
+                            <a href="../innsiktoganalyse" class="dropdown-item">Innsikt og analyse</a>
+                            <a href="../strategisk-it-radgivning" class="dropdown-item">Strategisk IT-rådgivning</a>
+                            <a href="../devops-monitorering" class="dropdown-item">DevOps-monitorering</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="../om" class="nav-link">Om oss</a></li>
+                    <li class="nav-item"><a href="karriere.html" class="nav-link active">Karriere</a></li>
+                </ul>
+                
+                <a href="#kontakt" class="btn btn-primary header-cta">Kontakt oss</a>
+                
+                <!-- Mobile-only footer with contact info -->
+                <div class="menu-footer">
+                    <div class="menu-contact-info">
+                        <a href="tel:+4756123465"><i class="fas fa-phone"></i> +47 56 12 34 65</a>
+                        <a href="mailto:hi@cipher.no"><i class="fas fa-envelope"></i> hi@cipher.no</a>
+                    </div>
+                    <p>&copy; 2025 Cipher Norge AS</p>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero/Careers Section Combined -->
+        <section class="careers-hero" id="karriere">
+            <div class="animated-shape shape1"></div>
+            <div class="animated-shape shape2"></div>
+            <div class="particles-container" id="heroParticles"></div>
+            <div class="container careers-hero-container">
+                <div class="careers-hero-content">
+                    <h1 class="careers-hero-title animation-fade-in">Karriere i <span class="text-gradient">Cipher</span></h1>
+                    <p class="careers-hero-subtitle animation-fade-in delay-1">Er du nyutdannet og sulten på erfaring eller ønsker nye utfordringer? Vi søker unge og eldre digitale talenter. Nøkkelord for egenskaper og interesser kan være <span class="text-primary">#mennesker, #prosess, #strategi, #cloud, #kubernetes, #Azure, #endring, #arkitektur</span> mm.</p>
+                    
+                    <p class="animation-fade-in delay-2">Vi vil at mennesker som jobber hos Cipher ønsker å tilhøre noe større enn seg selv. At man ønsker å gjøre arbeid som gjør en forskjell. Cipher-ansatte er ydmyke, kreative, innovative, samarbeidsvillige, smidige, kundesentriske, blendende smarte og morsomme å være sammen med.</p>
+                    
+                    <div class="careers-cta animation-fade-in delay-3">
+                        <a href="mailto:hi@cipher.no" class="btn btn-primary">Send oss din CV</a>
+                    </div>
+                    
+                    <!-- Skills Tags -->
+                    <div class="service-badges animation-fade-in delay-3">
+                        <span class="service-badge">#mennesker</span>
+                        <span class="service-badge">#prosess</span>
+                        <span class="service-badge">#strategi</span>
+                        <span class="service-badge">#cloud</span>
+                        <span class="service-badge">#kubernetes</span>
+                        <span class="service-badge">#Azure</span>
+                        <span class="service-badge">#endring</span>
+                        <span class="service-badge">#arkitektur</span>
+                    </div>
+                </div>
+                
+                <div class="careers-hero-image animation-fade-in delay-2">
+                    <img src="../bilder/DSCF6689+(1).jpg" alt="Cipher team samarbeider">
+                </div>
+            </div>
+        </section>
+
+        <!-- Open Positions Section -->
+        <section class="positions-section" id="stillinger">
+            <div class="container positions-container">
+                <div class="section-heading">
+                    <span class="section-subtitle animation-fade-in">Ledige stillinger</span>
+                    <h2 class="animation-fade-in delay-1">Bli med på laget</h2>
+                    <p class="section-description animation-fade-in delay-2">Vi er alltid på utkikk etter dyktige fagfolk som kan bidra til vår vekstreise.</p>
+                </div>
+                
+                <div class="position-card animation-fade-in delay-2">
+                    <h3 class="position-title">Senior IT-konsulent - Microsoft 365-ekspert</h3>
+                    <div class="position-meta">
+                        <span class="position-meta-item"><i class="fas fa-map-marker-alt"></i> Bergen</span>
+                        <span class="position-meta-item"><i class="fas fa-clock"></i> Fulltid</span>
+                    </div>
+                    <p class="position-description">Vil du bli vår nye Microsoft 365-ekspert? Vi ser etter en senior IT-konsulent som vil være med å bygge videre på dette sammen med oss i Cipher. Du vil få en sentral rolle i å gjøre teknologi til noe som faktisk skaper verdi - enten det handler om å styrke sikkerheten, legge til rette for bedre samarbeid i Teams, bygge struktur og informasjonsdeling i SharePoint, eller automatisere prosesser og arbeidsflyter for kundene. Du blir en viktig sparringspartner som bidrar til at kundene våre får en digital hverdag som fungerer, og som utvikler seg i takt med behovenes deres.</p>
+                    <div class="position-tags">
+                        <span class="position-tag">Microsoft 365</span>
+                        <span class="position-tag">SharePoint</span>
+                        <span class="position-tag">Teams</span>
+                        <span class="position-tag">Power Platform</span>
+                        <span class="position-tag">OneDrive</span>
+                        <span class="position-tag">Power Automate</span>
+                    </div>
+                    <a href="mailto:lena.barmen@cipher.no?subject=Søknad Senior IT-konsulent - Microsoft 365" class="btn btn-primary">Send søknad</a>
+                </div>
+
+                <div class="position-card animation-fade-in delay-2">
+                    <h3 class="position-title">IT-konsulent</h3>
+                    <div class="position-meta">
+                        <span class="position-meta-item"><i class="fas fa-map-marker-alt"></i> Bergen</span>
+                        <span class="position-meta-item"><i class="fas fa-clock"></i> Fulltid</span>
+                    </div>
+                    <p class="position-description">Vi søker en IT-konsulent som ønsker å være med på spennende kundeprosjekter innen IT-drift, skyløsninger og digital transformasjon. Du vil få mulighet til å jobbe med varierte oppgaver hos kunder i ulike bransjer, og utvikle deg både faglig og personlig. Vi ser etter deg som har noen års erfaring og ønsker å ta neste steg i karrieren din. Hos oss får du være med i et ungt og engasjert miljø hvor vi løfter hverandre.</p>
+                    <div class="position-tags">
+                        <span class="position-tag">IT-drift</span>
+                        <span class="position-tag">Azure</span>
+                        <span class="position-tag">Microsoft 365</span>
+                        <span class="position-tag">Support</span>
+                        <span class="position-tag">Prosjektarbeid</span>
+                    </div>
+                    <a href="mailto:hi@cipher.no?subject=Søknad IT-konsulent" class="btn btn-primary">Send søknad</a>
+                </div>
+                
+                <div class="position-card animation-fade-in delay-2">
+                    <h3 class="position-title">IT-Lærling</h3>
+                    <div class="position-meta">
+                        <span class="position-meta-item"><i class="fas fa-map-marker-alt"></i> Bergen</span>
+                        <span class="position-meta-item"><i class="fas fa-clock"></i> Fulltid</span>
+                        <span class="position-meta-item"><i class="fas fa-calendar-alt"></i> Sommer 2026</span>
+                    </div>
+                    <p class="position-description">Vi søker etter en motivert IT-Lærling som ønsker å få praktisk erfaring i et dynamisk IT-miljø. Som lærling hos oss vil du få jobbe med alt fra IT-drift og support til skyløsninger og sikkerhet. Du vil bli en del av vårt team og få mulighet til å lære av erfarne IT-spesialister. Dette er en perfekt mulighet for deg som vil kickstarte karrieren din innen IT!</p>
+                    <div class="position-tags">
+                        <span class="position-tag">IT-drift</span>
+                        <span class="position-tag">Support</span>
+                        <span class="position-tag">Azure</span>
+                        <span class="position-tag">Windows</span>
+                        <span class="position-tag">Nettverk</span>
+                    </div>
+                    <a href="mailto:hi@cipher.no?subject=Søknad IT-Lærling" class="btn btn-primary">Send søknad</a>
+                </div>
+                
+                <div class="position-card animation-fade-in delay-3">
+                    <h3 class="position-title">Åpen søknad</h3>
+                    <div class="position-meta">
+                        <span class="position-meta-item"><i class="fas fa-map-marker-alt"></i> Bergen</span>
+                        <span class="position-meta-item"><i class="fas fa-clock"></i> Fulltid</span>
+                    </div>
+                    <p class="position-description">Passer ingen av stillingene for deg, men du mener likevel at du kan bidra til Cipher? Send oss en åpen søknad! Vi er alltid på utkikk etter flinke folk innen IT-drift, skyteknologi, sikkerhet, rådgivning, DevOps, og mer. Vi hører gjerne fra deg!</p>
+                    <div class="position-tags">
+                        <span class="position-tag">IT-drift</span>
+                        <span class="position-tag">Azure</span>
+                        <span class="position-tag">Sikkerhet</span>
+                        <span class="position-tag">DevOps</span>
+                        <span class="position-tag">Analyse</span>
+                        <span class="position-tag">Rådgivning</span>
+                    </div>
+                    <a href="mailto:hi@cipher.no?subject=Åpen søknad" class="btn btn-primary">Send søknad</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="../bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                    </div>
+                    <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Tjenester</h5>
+                    <ul class="footer-links">
+                        <li><a href="../it-drift">IT-drift</a></li>
+                        <li><a href="../sikkerhetstjenester">Sikkerhetstjenester</a></li>
+                        <li><a href="../skytjenester">Skytjenester</a></li>
+                        <li><a href="../strategisk-it-radgivning">Strategisk IT-rådgivning</a></li>
+                        <li><a href="../innsiktoganalyse">Datainnsikt og analyse</a></li>
+                        <li><a href="../devops-monitorering">DevOps-monitorering</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Snarveier</h5>
+                    <ul class="footer-links">
+                        <li><a href="../">Hjem</a></li>
+                        <li><a href="../om">Om oss</a></li>
+                        <li><a href="#karriere">Karriere</a></li>
+                        <li><a href="../kontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Kontakt</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47" target="_blank" rel="noopener">Nøstegaten 58, 5011 Bergen</a></li>
+                        <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
+                        <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Cipher Norge AS. Alle rettigheter reservert.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize animations with IntersectionObserver for better performance
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // When element becomes visible, add a class to trigger animation
+                            entry.target.classList.add('animate');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+                
+                // Observe all animated elements
+                document.querySelectorAll('.animation-fade-in, .animation-slide-up').forEach(el => {
+                    observer.observe(el);
+                });
+            } else {
+                // Fallback for browsers that don't support IntersectionObserver
+                document.querySelectorAll('.animation-fade-in, .animation-slide-up').forEach(el => {
+                    el.classList.add('animate');
+                });
+            }
+            
+            // Check device size
+            const isMobile = () => window.innerWidth <= 768;
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            // Toggle menu function
+            const toggleMenu = () => {
+                navMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+                
+                const isExpanded = navMenu.classList.contains('active');
+                menuToggle.setAttribute('aria-expanded', isExpanded);
+                
+                // Prevent body scrolling when menu is open
+                document.body.style.overflow = isExpanded ? 'hidden' : '';
+            };
+            
+            // Open/close menu when clicking hamburger icon
+            menuToggle.addEventListener('click', toggleMenu);
+            
+            // Close menu when clicking on overlay
+            menuOverlay.addEventListener('click', toggleMenu);
+            
+            // Sticky Header
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Dropdown Functionality
+            const dropdowns = document.querySelectorAll('.dropdown');
+            
+            // Function to handle clicks on dropdown toggles
+            const handleDropdownToggle = (dropdown, link, e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent event from bubbling up
+                dropdown.classList.toggle('active');
+                
+                // Toggle aria-expanded for accessibility
+                const isExpanded = dropdown.classList.contains('active');
+                link.setAttribute('aria-expanded', isExpanded);
+                
+                // Close other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                        const otherToggle = otherDropdown.querySelector('.dropdown-toggle');
+                        if (otherToggle) {
+                            otherToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+            };
+            
+            // Handle click and hover events for dropdowns
+            dropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('.dropdown-toggle');
+                
+                if (!link) return;
+                
+                // On mobile: handle click events
+                link.addEventListener('click', (e) => {
+                    if (isMobile()) {
+                        handleDropdownToggle(dropdown, link, e);
+                        // Ensure dropdown is within the mobile menu bounds
+                        const dropdownContent = dropdown.querySelector('.dropdown-content');
+                        if (dropdownContent) {
+                            dropdownContent.style.width = '100%';
+                            dropdownContent.style.left = '0';
+                        }
+                    } else {
+                        // On desktop: prevent default action if clicking main navigation items with dropdowns
+                        e.preventDefault();
+                    }
+                });
+                
+                // Mouse enter/leave events for desktop
+                const setupHoverEvents = () => {
+                    if (!isMobile()) {
+                        dropdown.addEventListener('mouseenter', () => {
+                            dropdown.classList.add('hovered');
+                            link.setAttribute('aria-expanded', 'true');
+                        });
+                        
+                        dropdown.addEventListener('mouseleave', () => {
+                            dropdown.classList.remove('hovered');
+                            link.setAttribute('aria-expanded', 'false');
+                        });
+                    }
+                };
+                
+                // Initialize hover events
+                setupHoverEvents();
+                
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    if (isMobile()) {
+                        // Reset any desktop-specific states when switching to mobile
+                        dropdown.classList.remove('hovered');
+                    }
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                        const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+                        if (dropdownToggle) {
+                            dropdownToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                    document.body.style.overflow = '';
+                    menuOverlay.classList.remove('active');
+                }
+            });
+            
+            // Prevent dropdown menu clicks from closing the mobile menu
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            });
+            
+            // Create particles animation
+            const createParticles = (containerId, count = 30) => {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random position
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    
+                    // Random size
+                    const size = Math.random() * 4 + 1;
+                    
+                    // Random opacity
+                    const opacity = Math.random() * 0.5 + 0.2;
+                    
+                    // Set styles
+                    particle.style.left = `${posX}%`;
+                    particle.style.top = `${posY}%`;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.opacity = opacity;
+                    
+                    // Random animation delay
+                    const delay = Math.random() * 10;
+                    particle.style.animationDelay = `${delay}s`;
+                    
+                    container.appendChild(particle);
+                }
+            };
+            
+            // Initialize particles
+            createParticles('heroParticles', 40);
+        });
+    </script>
+</body>
+</html>

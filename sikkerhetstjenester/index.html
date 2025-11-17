@@ -1,0 +1,2647 @@
+<!DOCTYPE html>
+<html lang="no-NO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sikkerhetstjenester | Cipher</title>
+    <link rel="icon" type="image/png" href="../bilder/logoside192.png">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX4GRPD3L6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TX4GRPD3L6');
+    </script>
+    <!-- End Google Analytics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #F5A28C; /* Oransj */
+            --primary-dark: #E07E68; /* Mørkere oransj */
+            --primary-light: #FFCEBF; /* Lysere oransj */
+            --secondary: #212338; /* Mørkeblå - primærfarge */
+            --secondary-dark: #171828; /* Mørkere blå */
+            --secondary-light: #353756; /* Lysere blå */
+            --secondary-lighter: #404466; /* Enda lysere blå */
+            --dark: #171721;
+            --light: #F8F9FA;
+            --gray: #6c757d;
+            --light-gray: #F2F2F2;
+            --white: #FFFFFF;
+            --gradient-blue: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            --gradient-orange: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --background: #2A2C44; /* Lysere bakgrunn enn original */
+            
+            /* Sikkerhetstjenester - Rød inspirert fargepalett */
+            --accent-red: #F44336;
+            --accent-dark-red: #C62828;
+            --accent-light-red: #FFCDD2;
+            --accent-gradient: linear-gradient(135deg, #F44336, #C62828);
+            --glow-primary: 0 0 15px rgba(245, 162, 140, 0.6);
+            --glow-red: 0 0 15px rgba(244, 67, 54, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .big-paragraph {
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            transform: translateX(0);
+        }
+        
+        .btn-primary {
+            background: #F44336;
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(244, 67, 54, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: #C62828;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-light);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(21, 23, 38, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(21, 23, 38, 0.6);
+        }
+        
+        .btn-security {
+            background: linear-gradient(135deg, #F44336, #C62828);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(244, 67, 54, 0.4);
+        }
+        
+        .btn-security:hover {
+            background: linear-gradient(135deg, #E53935, #B71C1C);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #F44336;
+            color: #F44336;
+        }
+        
+        .btn-outline:hover {
+            background: #F44336;
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        .btn-shield {
+            background: linear-gradient(135deg, #F44336, #C62828);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(244, 67, 54, 0.4);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-shield:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.6);
+        }
+        
+        .btn-shield::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 70%);
+            transform: rotate(30deg);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-shield:hover::after {
+            animation: shine 1.5s ease;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(30deg);
+                opacity: 0;
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%) rotate(30deg);
+                opacity: 0;
+            }
+        }
+        
+        .btn-glow {
+            animation: pulse-glow 2s infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(244, 67, 54, 0.8);
+            }
+        }
+        
+        .text-primary {
+            color: #F44336;
+        }
+        
+        .text-security {
+            color: #F44336;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .mb-5 {
+            margin-bottom: 3rem;
+        }
+        
+        /* Improved Header & Navigation */
+        .header {
+            background-color: rgba(42, 44, 68, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(42, 44, 68, 0.98);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 35px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Menu overlay for mobile */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 98;
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Mobile-only footer */
+        .menu-footer {
+            display: none;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        .menu-contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .menu-contact-info a {
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-contact-info a i {
+        margin-right: 8px;
+        color: #F44336;
+        }
+        
+        .menu-contact-info a:hover {
+        color: #F44336;
+        transform: translateY(-2px);
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #F44336;
+        transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+        color: #F44336;
+        }
+        
+        .header-cta {
+            margin-left: 30px;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+            font-size: 1.5rem;
+            position: relative;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            z-index: 101;
+            transition: all 0.3s ease;
+        }
+        
+        /* Hamburger icon with animated transition */
+        .hamburger-icon {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hamburger-icon .line {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            margin: 3px 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .mobile-toggle.active .hamburger-icon .line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .mobile-toggle.active .hamburger-icon .line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-toggle.active .hamburger-icon .line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Modern Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: var(--secondary);
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 12px 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 99;
+            overflow: hidden;
+        }
+        
+        .dropdown-content::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 10px;
+            height: 10px;
+            background-color: var(--secondary);
+        }
+        
+        .dropdown:hover .dropdown-content,
+        .dropdown.active .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .dropdown-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background-color: #F44336;
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+        background-color: var(--secondary-light);
+        color: #F44336;
+        padding-left: 25px;
+        }
+        
+        .dropdown-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item.active {
+        color: #F44336;
+        background-color: rgba(244, 67, 54, 0.1);
+        padding-left: 25px;
+        }
+        
+        .dropdown-item.active::before {
+            transform: scaleY(1);
+        }
+        
+        /* Hero Section */
+        .page-hero {
+            padding: 180px 0 100px;
+            position: relative;
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(23, 24, 40, 0.9), rgba(33, 35, 56, 0.8));
+            z-index: 1;
+        }
+        
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background-color: #F44336;
+        }
+        
+        .hero-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background-color: rgba(244, 67, 54, 0.2);
+        color: #F44336;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        animation: fadeInUp 1s ease;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            animation: fadeInUp 1s ease 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            animation: fadeInUp 1s ease 0.4s;
+            animation-fill-mode: both;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            animation: fadeInUp 1s ease 0.6s;
+            animation-fill-mode: both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Floating elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 1;
+            opacity: 0.5;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .float-1 {
+        width: 300px;
+        height: 300px;
+        top: -100px;
+        right: -50px;
+        background: radial-gradient(circle at center, #FFCDD2, transparent 70%);
+        animation-delay: 0s;
+        }
+        
+        .float-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            left: -100px;
+            background: radial-gradient(circle at center, rgba(244, 67, 54, 0.3), transparent 70%);
+            animation-delay: -5s;
+        }
+        
+        .float-3 {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            right: 20%;
+            background: radial-gradient(circle at center, rgba(198, 40, 40, 0.3), transparent 70%);
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(50px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(20px, 50px) scale(0.9);
+            }
+            75% {
+                transform: translate(-30px, 20px) scale(1.05);
+            }
+        }
+        
+        /* Intro Section */
+        .intro-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .intro-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-tag {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #F44336;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        }
+        
+        .intro-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .intro-content h2 .highlight {
+        position: relative;
+        color: #F44336;
+        display: inline-block;
+        }
+        
+        .intro-content h2 .highlight::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 8px;
+        background-color: rgba(244, 67, 54, 0.2);
+        z-index: -1;
+        }
+        
+        .intro-content p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .security-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .security-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: rgba(33, 35, 56, 0.05);
+            color: var(--secondary);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(33, 35, 56, 0.1);
+        }
+        
+        .security-pill i {
+        color: #F44336;
+        }
+        
+        .security-pill:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        .security-pill:hover i {
+        color: #FFCDD2;
+        }
+        
+        .intro-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: all 0.5s ease;
+            z-index: 2;
+        }
+        
+        .intro-image:hover {
+            transform: perspective(1000px) rotateY(0);
+        }
+        
+        .intro-image::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(244, 67, 54, 0.3), rgba(198, 40, 40, 0.3));
+        z-index: 1;
+        opacity: 0.7;
+        transition: opacity 0.5s ease;
+        }
+        
+        .intro-image:hover::before {
+            opacity: 0;
+        }
+        
+        .intro-image img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+        
+        .intro-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .background-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(33, 35, 56, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+            z-index: 1;
+        }
+        
+        /* What is Section */
+        .what-is-section {
+            padding: 100px 0;
+            background-color: var(--secondary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .what-is-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(42, 44, 68, 0.95), rgba(23, 24, 40, 0.85));
+            z-index: 1;
+        }
+        
+        .what-is-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .what-is-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .what-is-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+        
+        .what-is-content h2 .highlight {
+        color: #FFCDD2;
+        position: relative;
+        display: inline-block;
+        }
+        
+        .what-is-content h2 .highlight::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 8px;
+        background-color: rgba(244, 67, 54, 0.4);
+        z-index: -1;
+        }
+        
+        .what-is-content p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .security-steps {
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .security-step {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .security-step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .security-step::after {
+        content: '';
+        position: absolute;
+        top: 40px;
+        left: 21px;
+        width: 2px;
+        height: calc(100%);
+        background: linear-gradient(to bottom, #F44336, transparent);
+        z-index: 1;
+        }
+        
+        .security-step:last-child::after {
+            display: none;
+        }
+        
+        .step-number {
+        width: 42px;
+        height: 42px;
+        background: var(--accent-gradient);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: var(--white);
+        font-size: 1.2rem;
+        position: relative;
+        z-index: 2;
+        flex-shrink: 0;
+        box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+        
+        .step-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+        
+        .what-is-image {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .what-is-image img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .what-is-image::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 60%;
+            height: 60%;
+            background: rgba(244, 67, 54, 0.1);
+            border-radius: 20px;
+            z-index: -1;
+        }
+        
+        /* Services Section */
+        .services-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            color: var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-subtitle {
+        color: #F44336;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        display: block;
+        }
+        
+        .section-description {
+            max-width: 800px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+        }
+        
+        .services-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(33, 35, 56, 0.05);
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top right, rgba(244, 67, 54, 0.2), transparent 70%);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        }
+        
+        .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        border-color: rgba(244, 67, 54, 0.3);
+        }
+        
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .service-icon {
+        width: 70px;
+        height: 70px;
+        background: rgba(244, 67, 54, 0.1);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        color: #F44336;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+        background: #F44336;
+        color: var(--white);
+        transform: rotateY(360deg);
+        box-shadow: 0 0 20px rgba(244, 67, 54, 0.3);
+        }
+        
+        .service-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            line-height: 1.4;
+        }
+        
+        .service-description {
+            color: var(--secondary-light);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .service-features {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+        
+        .service-feature {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(33, 35, 56, 0.1);
+            color: var(--secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .service-feature:hover {
+            transform: translateY(-3px);
+        }
+        
+        .feature-security {
+        color: #F44336;
+        }
+        
+        .feature-privacy {
+            color: #673AB7;
+        }
+        
+        .feature-compliance {
+            color: #4CAF50;
+        }
+        
+        .services-cta {
+            text-align: center;
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 100px 0;
+            background-color: var(--secondary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .benefits-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(33, 35, 56, 0.95), rgba(23, 24, 40, 0.85));
+            z-index: 1;
+        }
+        
+        .benefits-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        
+        .benefit-card::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #F44336, #C62828);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+        box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .benefit-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .benefit-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, var(--secondary-light), rgba(244, 67, 54, 0.3));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 35px;
+        color: #F44336;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .benefit-card:hover .benefit-icon {
+        transform: rotateY(180deg);
+        background: linear-gradient(135deg, #F44336, #C62828);
+        color: var(--white);
+        }
+        
+        .benefit-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--white);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .benefit-desc {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.05rem;
+        }
+
+        /* Interactive Features */
+        .interactive-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .interactive-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .interactive-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .interactive-content p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .security-checker {
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .security-checker h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            text-align: center;
+        }
+        
+        .checker-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(33, 35, 56, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .checker-input:focus {
+            outline: none;
+            border-color: #F44336;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+        }
+        
+        .password-strength {
+            margin-bottom: 20px;
+        }
+        
+        .strength-meter {
+            height: 8px;
+            background-color: rgba(33, 35, 56, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .strength-weak {
+            background-color: #F44336;
+        }
+        
+        .strength-medium {
+            background-color: #FF9800;
+        }
+        
+        .strength-good {
+            background-color: #4CAF50;
+        }
+        
+        .strength-strong {
+            background-color: #2E7D32;
+        }
+        
+        .strength-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .security-checks {
+            margin-top: 20px;
+        }
+        
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .check-item i {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: rgba(33, 35, 56, 0.05);
+            display: none;
+        }
+        
+        .result-container.active {
+            display: block;
+        }
+        
+        .result-message {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .result-danger {
+            color: #F44336;
+        }
+        
+        .result-warning {
+            color: #FF9800;
+        }
+        
+        .result-success {
+            color: #4CAF50;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+            color: var(--secondary);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-content {
+            position: relative;
+        }
+        
+        .contact-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .contact-content p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .contact-info {
+            margin-top: 40px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background-color: rgba(244, 67, 54, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #F44336;
+        box-shadow: 0 5px 15px rgba(244, 67, 54, 0.2);
+        }
+        
+        .contact-text {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        
+        .contact-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .contact-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(33, 35, 56, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .contact-social a:hover {
+        background-color: #F44336;
+        color: var(--white);
+        transform: translateY(-5px);
+        }
+        
+        .contact-form {
+            background-color: var(--light-gray);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(33, 35, 56, 0.05);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--white);
+            border: 1px solid rgba(33, 35, 56, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            color: var(--secondary);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(33, 35, 56, 0.5);
+        }
+        
+        .form-control:focus {
+        outline: none;
+        border-color: #F44336;
+        box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+        background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 35px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background-color: #F44336;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+        color: #F44336;
+        padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-social a:hover {
+        background-color: #F44336;
+        transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Particle effect */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .page-title, .hero-title {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .intro-grid,
+            .what-is-grid,
+            .contact-grid,
+            .interactive-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .intro-image {
+                order: -1;
+            }
+            
+            .what-is-image {
+                order: -1;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 0;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 85%;
+                height: 100vh;
+                background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+                flex-direction: column;
+                transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                padding: 80px 30px 40px;
+                z-index: 100;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+                overflow-y: auto;
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-menu.active {
+                right: 0;
+                max-width: 85%;
+            }
+            
+            /* Show mobile footer when menu is active */
+            .menu-footer {
+                display: block;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+                margin-bottom: 30px;
+                gap: 0;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-link {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px 0;
+                font-size: 1.2rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-link:hover {
+                padding-left: 10px;
+                color: #F44336;
+            }
+            
+            .nav-link::after {
+                display: none;
+            }
+            
+            .dropdown-toggle {
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .dropdown-icon {
+                font-size: 1rem;
+            }
+            
+            .header-cta {
+                margin: 20px 0 0;
+                width: 100%;
+            }
+            
+            .header-cta .btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 1.1rem;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(90deg, #F44336, #C62828);
+            }
+            
+            .header-cta .btn i {
+                margin-left: 10px;
+            }
+            
+            .dropdown-content {
+                position: static;
+                background-color: rgba(255, 255, 255, 0.05);
+                box-shadow: none;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                margin-top: 0;
+                border-radius: 8px;
+                opacity: 1;
+                visibility: visible;
+                transform: none !important;
+                transition: max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+                border: none;
+                pointer-events: auto; /* Ensure clicks work on mobile */
+                width: 100%;
+                left: 0;
+            }
+            
+            .dropdown-content::before {
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-content {
+                max-height: 400px;
+                padding: 10px 0;
+                margin-top: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .dropdown-item {
+                padding: 12px 20px;
+                margin-left: 0;
+                font-size: 1rem;
+                border-left: 3px solid transparent;
+                text-align: left;
+                display: block;
+                width: 100%;
+            }
+            
+            .dropdown-item:hover {
+                border-left: 3px solid #F44336;
+                background-color: rgba(255, 255, 255, 0.1);
+                padding-left: 25px;
+            }
+            
+            .dropdown-item::before {
+                display: none;
+            }
+            
+            .page-hero {
+                padding: 120px 0 80px;
+            }
+            
+            .page-title, .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .security-pills {
+                flex-wrap: wrap;
+            }
+            
+            .services-section {
+                padding: 80px 0;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .hero-cta .btn {
+                width: 100%;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="../">
+                    <img src="../bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="menuToggle" aria-label="Menyknapp" aria-expanded="false">
+                <span class="hamburger-icon">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </span>
+            </button>
+            
+            <!-- Dark overlay when menu is open -->
+            <div class="menu-overlay" id="menuOverlay"></div>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-list" id="navList">
+                    <li class="nav-item"><a href="../" class="nav-link">Hjem</a></li>
+                    <li class="nav-item dropdown" id="servicesDropdownContainer">
+                        <a href="#" class="nav-link dropdown-toggle active">
+                            Våre tjenester
+                            <i class="dropdown-icon fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-content" id="servicesDropdown">
+                            <a href="../it-drift" class="dropdown-item">IT-drift</a>
+                            <a href="../sikkerhetstjenester" class="dropdown-item active">Sikkerhetstjenester</a>
+                            <a href="../skytjenester" class="dropdown-item">Skytjenester</a>
+                            <a href="../innsiktoganalyse" class="dropdown-item">Innsikt og analyse</a>
+                            <a href="../strategisk-it-radgivning" class="dropdown-item">Strategisk IT-rådgivning</a>
+                            <a href="../devops-monitorering" class="dropdown-item">DevOps-monitorering</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="../om" class="nav-link">Om oss</a></li>
+                    <li class="nav-item"><a href="../kontakt#karriere" class="nav-link">Karriere</a></li>
+                </ul>
+                
+                <a href="#kontakt" class="btn btn-primary header-cta">Kontakt oss</a>
+                
+                <!-- Mobile-only footer with contact info -->
+                <div class="menu-footer">
+                    <div class="menu-contact-info">
+                        <a href="tel:+4756123465"><i class="fas fa-phone"></i> +47 56 12 34 65</a>
+                        <a href="mailto:hi@cipher.no"><i class="fas fa-envelope"></i> hi@cipher.no</a>
+                    </div>
+                    <p>&copy; 2025 Cipher Norge AS</p>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero" id="hero">
+            <div class="floating-element float-1"></div>
+            <div class="floating-element float-2"></div>
+            <div class="particles" id="heroParticles"></div>
+            <div class="container">
+                <div class="page-hero-content">
+                    <div class="hero-badge">Cipher Sikkerhetstjenester</div>
+                    <h1 class="hero-title">Vi sikrer din <span class="highlight">digitale virksomhet</span></h1>
+                    <p class="hero-subtitle">Våre sikkerhetstjenester beskytter virksomheten din mot dagens og morgendagens trusler gjennom proaktiv overvåking, sikkerhetsarkitektur og moderne sikkerhetsløsninger.</p>
+                    <div class="hero-cta">
+                        <a href="#tjenester" class="btn btn-security">Se våre tjenester</a>
+                        <a href="#kontakt" class="btn btn-outline">Kontakt oss</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="tjenester" class="services-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Våre tilbud</span>
+                    <h2>Sikkerhetstjenester</h2>
+                    <p class="section-description">Vi tilbyr et bredt spekter av sikkerhetstjenester for å beskytte din virksomhet mot både dagens og morgendagens trusler.</p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="service-title">Sikkerhetsarkitektur</h3>
+                        <p class="service-description">Sikkerhet er ikke bare enkeltstående konfigureringer. Vi har lang erfaring med sikkerhetsarkitektur hvor vi ser hele miljøet i sammenheng. Fra mobiler til moderne skyløsninger, vi hjelper med og analyserer hele miljøet og sørger for dybdeforsvar.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-shield-alt"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-network-wired"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-layer-group"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3 class="service-title">Sikkerhetsovervåkning</h3>
+                        <p class="service-description">Vårt sikkerhetssenter (SOC) overvåker dine systemer døgnet rundt for å oppdage og håndtere sikkerhetshendelser før de utvikler seg til alvorlige brudd. Vi benytter avansert teknologi for å sikre rask respons.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-chart-line"></i></div>
+                            <div class="service-feature feature-privacy"><i class="fas fa-bell"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-server"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3 class="service-title">Sikkerhetsbevisstgjøring</h3>
+                        <p class="service-description">Den menneskelige faktoren er ofte det svakeste leddet i sikkerhetskjeden. Vi tilbyr omfattende opplæringsprogrammer for å styrke sikkerhetskultur og redusere risikoen for menneskelige feil.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-users"></i></div>
+                            <div class="service-feature feature-privacy"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="service-feature feature-compliance"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3 class="service-title">Etterlevelse og styring</h3>
+                        <p class="service-description">Vi hjelper din virksomhet med å oppfylle regulatoriske krav som GDPR, NIS2 og ISO27001. Våre tjenester inkluderer risikovurderinger, gap-analyser og implementering av styringssystemer basert på DORA og NSMs Grunnprinsipper for IKT-sikkerhet.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-privacy"><i class="fas fa-clipboard-check"></i></div>
+                            <div class="service-feature feature-compliance"><i class="fas fa-balance-scale"></i></div>
+                            <div class="service-feature feature-compliance"><i class="fas fa-certificate"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="service-title">Sikkerhet som akselerator</h3>
+                        <p class="service-description">Vi gjør sikkerhet til en drivkraft for innovasjon, ikke en flaskehals. Ved å integrere sikkerhetspraksis og -verktøy direkte i utviklingsløpet, hjelper vi dere med å levere sikre løsninger raskere, med høyere kvalitet og uten å bremse utviklingshastigheten.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-code"></i></div>
+                            <div class="service-feature feature-privacy"><i class="fas fa-lock-open"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-cogs"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="service-title">Hendelseshåndtering</h3>
+                        <p class="service-description">Vårt ekspertteam står klare til å håndtere sikkerhetshendelser når de oppstår. Vi tilbyr rask respons, rotårsaksanalyse og bidrar til å gjenopprette normal drift så raskt som mulig etter et sikkerhetsbrudd.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-history"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-search-plus"></i></div>
+                            <div class="service-feature feature-compliance"><i class="fas fa-file-medical-alt"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="service-title">Kontinuerlig sårbarhetsskanning</h3>
+                        <p class="service-description">Vi avdekker svakheter i dine systemer før angriperne gjør det. Vår kontinuerlige sårbarhetsskanning identifiserer, prioriterer og rapporterer sårbarheter automatisk, slik at du alltid har oversikt over din sikkerhetsstatus.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-shield-alt"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-bug"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-chart-bar"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h3 class="service-title">Sikker kodeanalyse</h3>
+                        <p class="service-description">Vi implementerer automatiserte verktøy for statisk og dynamisk kodeanalyse som identifiserer sårbarheter i kildekoden tidlig i utviklingsprosessen. Dette hjelper deg å levere sikrere programvare raskere og til lavere kostnad.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-code"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-check-double"></i></div>
+                            <div class="service-feature feature-privacy"><i class="fas fa-file-code"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h3 class="service-title">Sikkerhetsorientert monitorering</h3>
+                        <p class="service-description">Vår sikkerhetsmonitorering går utover standard overvåkning ved å analysere mønstre, avdekke avvik og identifisere sikkerhetsbrudd i sanntid. Vi gir deg ikke bare varsler, men også handlingsbar innsikt for å styrke ditt sikkerhetsforsvar.</p>
+                        <div class="service-features">
+                            <div class="service-feature feature-security"><i class="fas fa-chart-line"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-bell"></i></div>
+                            <div class="service-feature feature-security"><i class="fas fa-eye"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="services-cta">
+                    <a href="#kontakt" class="btn btn-security btn-glow">Kontakt oss for en sikkerhetsvurdering</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section" id="fordeler">
+            <div class="particles" id="benefitsParticles"></div>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Hvorfor velge oss?</span>
+                    <h2>Fordeler med våre sikkerhetstjenester</h2>
+                    <p class="section-description">Cipher sikrer din virksomhet med en helhetlig tilnærming til cybersikkerhet som kombinerer mennesker, prosesser og teknologi.</p>
+                </div>
+                
+                <div class="benefits-cards">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="benefit-title">Pålitelig beskyttelse</h3>
+                        <p class="benefit-desc">Våre sikkerhetstjenester gir robust beskyttelse mot et bredt spekter av trusler, fra tradisjonelle angrep til avanserte trusler og zero-day-sårbarheter.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 class="benefit-title">Sertifiserte eksperter</h3>
+                        <p class="benefit-desc">Vårt team består av sertifiserte sikkerhetseksperter med omfattende erfaring fra både offentlig og privat sektor. Vi holder oss konstant oppdatert på nye trusler og teknologier.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3 class="benefit-title">Proaktiv tilnærming</h3>
+                        <p class="benefit-desc">Vi jobber proaktivt for å identifisere og adressere sårbarheter før de kan utnyttes, noe som reduserer risikoen for kostbare sikkerhetsbrudd og nedetid.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h3 class="benefit-title">Kontinuerlig forbedring</h3>
+                        <p class="benefit-desc">Våre sikkerhetstjenester utvikles kontinuerlig for å møte nye trusler og utfordringer. Vi analyserer trender og justerer våre løsninger basert på nye innsikter.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Security Checker Section -->
+        <section class="interactive-section" id="sikkerhetssjekk">
+            <div class="container">
+                <div class="interactive-grid">
+                    <div class="interactive-content">
+                        <div class="section-tag">Interaktivt verktøy</div>
+                        <h2>Test sikkerheten i din organisasjon</h2>
+                        <p>Bruk vår interaktive sikkerhetssjekker for å få en rask vurdering av noen sentrale sikkerhetselementer i din virksomhet. Dette verktøyet gir deg et raskt overblikk over potensielle forbedringsområder.</p>
+                        <p>For en mer omfattende vurdering anbefaler vi at du kontakter våre sikkerhetseksperter for en grundig gjennomgang tilpasset din virksomhets spesifikke behov og utfordringer.</p>
+                    </div>
+                    
+                    <div class="security-checker">
+                        <h3>Sjekk passordstyrken</h3>
+                        <input type="password" id="passwordInput" class="checker-input" placeholder="Skriv inn et passord for å teste styrken" autocomplete="off">
+                        
+                        <div class="password-strength">
+                            <div class="strength-meter">
+                                <div id="strengthBar" class="strength-bar"></div>
+                            </div>
+                            <div id="strengthText" class="strength-text">Ikke vurdert</div>
+                        </div>
+                        
+                        <div class="security-checks">
+                            <div id="check1" class="check-item">
+                                <i class="fas fa-times-circle"></i> Minst 12 tegn
+                            </div>
+                            <div id="check2" class="check-item">
+                                <i class="fas fa-times-circle"></i> Inneholder store bokstaver
+                            </div>
+                            <div id="check3" class="check-item">
+                                <i class="fas fa-times-circle"></i> Inneholder tall
+                            </div>
+                            <div id="check4" class="check-item">
+                                <i class="fas fa-times-circle"></i> Inneholder spesialtegn
+                            </div>
+                        </div>
+                        
+                        <div id="resultContainer" class="result-container">
+                            <p class="result-message">Skriv inn et passord for å se resultatet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="kontakt" class="contact-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Ta kontakt</span>
+                    <h2>Sikre din virksomhets digitale fremtid</h2>
+                    <p class="section-description">Kontakt oss for en uforpliktende samtale om hvordan vi kan hjelpe din virksomhet med å styrke sikkerheten.</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-content">
+                        <h3>La oss hjelpe deg med å bygge et robust sikkerhetsforsvar</h3>
+                        <p>Vi tilbyr skreddersydde sikkerhetsløsninger som møter dine spesifikke behov. Vårt team av sikkerhetseksperter står klar til å hjelpe deg med å navigere i dagens komplekse trusselbilde.</p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h5>Besøk oss</h5>
+                                    <p>Nøstegaten 58, 5011 Bergen</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h5>Ring oss</h5>
+                                    <p>+47 56 12 34 65</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h5>Send e-post</h5>
+                                    <p>hi@cipher.no</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-social">
+                            <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.instagram.com/ciphernorge/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send oss en melding</h3>
+                        
+                        <!-- Success Message -->
+                        <div id="form-success" style="display: none; background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                            <i class="fas fa-check-circle"></i> Takk for din henvendelse! Vi vil kontakte deg snart.
+                        </div>
+                        
+                        <!-- Error Message -->
+                        <div id="form-error" style="display: none; background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f1aeb5;">
+                            <i class="fas fa-exclamation-triangle"></i> Noe gikk galt. Prøv igjen eller send e-post direkte til hi@cipher.no
+                        </div>
+                        
+                        <form id="contactForm" action="https://formspree.io/f/xzzakvpk" method="POST">
+                            <!-- Hidden fields to specify recipient -->
+                            <input type="hidden" name="_reply_to" value="hi@cipher.no">
+                            
+                            <!-- Hidden field to redirect after submission -->
+                            <input type="hidden" name="_next" value="https://cipher.no#kontakt">
+                            
+                            <!-- Hidden field to specify subject format -->
+                            <input type="hidden" name="_subject" value="Ny henvendelse fra cipher.no - Sikkerhetstjenester">
+                            
+                            <div class="form-group">
+                                <input type="text" id="name" name="navn" class="form-control" placeholder="Ditt navn" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Din e-post" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" name="emne" class="form-control" placeholder="Emne">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="melding" class="form-control" placeholder="Din melding" required></textarea>
+                            </div>
+                            <button type="submit" id="submit-button" class="btn btn-security">
+                                <span class="button-text">Send melding</span>
+                                <span class="button-loading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Sender...
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="../bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                    </div>
+                    <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/ciphernorge/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Tjenester</h5>
+                    <ul class="footer-links">
+                        <li><a href="../it-drift">IT-drift</a></li>
+                        <li><a href="../sikkerhetstjenester">Sikkerhetstjenester</a></li>
+                        <li><a href="../skytjenester">Skytjenester</a></li>
+                        <li><a href="../innsiktoganalyse">Innsikt og analyse</a></li>
+                        <li><a href="../strategisk-it-radgivning">Strategisk IT-rådgivning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Snarveier</h5>
+                    <ul class="footer-links">
+                        <li><a href="../">Hjem</a></li>
+                        <li><a href="#tjenester">Tjenester</a></li>
+                        <li><a href="../om">Om oss</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
+                        <li><a href="../kontakt#karriere">Karriere</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Kontakt</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://goo.gl/maps/exampleMap" target="_blank">Nøstegaten 58, 5011 Bergen</a></li>
+                        <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
+                        <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Cipher Norge AS. Alle rettigheter reservert.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for nettsiden -->
+    <script>
+        // Partikkeleffekter for hero og andre seksjoner
+        document.addEventListener('DOMContentLoaded', () => {
+            // Partikkel-effekt
+            const createParticles = (elementId, numberOfParticles = 25) => {
+                const element = document.getElementById(elementId);
+                if (!element) return;
+                
+                for (let i = 0; i < numberOfParticles; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random positioning
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    particle.style.left = `${posX}%`;
+                    particle.style.top = `${posY}%`;
+                    
+                    // Random size
+                    const size = Math.random() * 5 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Random animation
+                    const animDuration = Math.random() * 20 + 10;
+                    const animDelay = Math.random() * 10;
+                    particle.style.animation = `float ${animDuration}s ease-in-out ${animDelay}s infinite alternate`;
+                    
+                    // Random opacity
+                    const opacity = Math.random() * 0.7 + 0.3;
+                    particle.style.opacity = opacity;
+                    
+                    element.appendChild(particle);
+                }
+            };
+            
+            // Initialize particles for each section
+            createParticles('heroParticles', 50);
+            createParticles('securityParticles', 30);
+            createParticles('benefitsParticles', 40);
+            
+            // Password strength checker functionality
+            const passwordInput = document.getElementById('passwordInput');
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            const resultContainer = document.getElementById('resultContainer');
+            const checks = [
+                document.getElementById('check1'),
+                document.getElementById('check2'),
+                document.getElementById('check3'),
+                document.getElementById('check4')
+            ];
+            
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    let strength = 0;
+                    let message = '';
+                    let issues = [];
+                    
+                    // Check length (minimum 12 characters for strong password)
+                    const check1 = password.length >= 12;
+                    checks[0].innerHTML = check1 
+                        ? '<i class="fas fa-check-circle" style="color: #4CAF50;"></i> Minst 12 tegn' 
+                        : '<i class="fas fa-times-circle" style="color: #F44336;"></i> Minst 12 tegn';
+                    if (check1) strength += 20;
+                    else issues.push('For kort passord');
+                    
+                    // Extra points for length
+                    if (password.length >= 16) strength += 10;
+                    if (password.length >= 20) strength += 10;
+                    
+                    // Check uppercase
+                    const check2 = /[A-Z]/.test(password);
+                    checks[1].innerHTML = check2 
+                        ? '<i class="fas fa-check-circle" style="color: #4CAF50;"></i> Inneholder store bokstaver' 
+                        : '<i class="fas fa-times-circle" style="color: #F44336;"></i> Inneholder store bokstaver';
+                    if (check2) strength += 15;
+                    else issues.push('Mangler store bokstaver');
+                    
+                    // Check numbers
+                    const check3 = /[0-9]/.test(password);
+                    checks[2].innerHTML = check3 
+                        ? '<i class="fas fa-check-circle" style="color: #4CAF50;"></i> Inneholder tall' 
+                        : '<i class="fas fa-times-circle" style="color: #F44336;"></i> Inneholder tall';
+                    if (check3) strength += 15;
+                    else issues.push('Mangler tall');
+                    
+                    // Check special characters
+                    const check4 = /[^A-Za-z0-9]/.test(password);
+                    checks[3].innerHTML = check4 
+                        ? '<i class="fas fa-check-circle" style="color: #4CAF50;"></i> Inneholder spesialtegn' 
+                        : '<i class="fas fa-times-circle" style="color: #F44336;"></i> Inneholder spesialtegn';
+                    if (check4) strength += 15;
+                    else issues.push('Mangler spesialtegn');
+                    
+                    // Check lowercase
+                    const hasLowercase = /[a-z]/.test(password);
+                    if (hasLowercase) strength += 15;
+                    else issues.push('Mangler små bokstaver');
+                    
+                    // Check for common patterns and dictionary words
+                    const commonPatterns = ['123', 'abc', 'qwe', 'password', 'passord', 'test', 'admin'];
+                    const hasCommonPattern = commonPatterns.some(pattern => 
+                        password.toLowerCase().includes(pattern)
+                    );
+                    
+                    if (hasCommonPattern) {
+                        strength -= 30;
+                        issues.push('Inneholder vanlige mønstre eller ord');
+                    }
+                    
+                    // Check for sequential characters
+                    const hasSequence = /(.)\1{2,}/.test(password);
+                    if (hasSequence) {
+                        strength -= 20;
+                        issues.push('Inneholder repeterende tegn');
+                    }
+                    
+                    // Update strength bar
+                    strength = Math.max(0, Math.min(100, strength));
+                    strengthBar.style.width = `${strength}%`;
+                    
+                    // Remove existing classes
+                    strengthBar.classList.remove('strength-weak', 'strength-medium', 'strength-good', 'strength-strong');
+                    
+                    // Add appropriate class and message
+                    if (strength === 0) {
+                        strengthText.textContent = 'Ikke vurdert';
+                    } else if (strength <= 30) {
+                        strengthBar.classList.add('strength-weak');
+                        strengthText.textContent = 'Svakt';
+                        message = '<p class="result-message result-danger"><i class="fas fa-exclamation-circle"></i> Dette passordet er for svakt og vil lett kunne knekkes. ' + 
+                                 (issues.length > 0 ? 'Problemer: ' + issues.join(', ') : '') + '</p>';
+                    } else if (strength <= 60) {
+                        strengthBar.classList.add('strength-medium');
+                        strengthText.textContent = 'Moderat';
+                        message = '<p class="result-message result-warning"><i class="fas fa-exclamation-triangle"></i> Dette passordet er moderat sterkt, men har rom for forbedring. ' +
+                                 (issues.length > 0 ? 'Vurder å forbedre: ' + issues.join(', ') : '') + '</p>';
+                    } else if (strength <= 80) {
+                        strengthBar.classList.add('strength-good');
+                        strengthText.textContent = 'Bra';
+                        message = '<p class="result-message result-success"><i class="fas fa-check-circle"></i> Dette er et bra passord. Sørg for at det er unikt for denne tjenesten.</p>';
+                    } else {
+                        strengthBar.classList.add('strength-strong');
+                        strengthText.textContent = 'Sterkt';
+                        message = '<p class="result-message result-success"><i class="fas fa-shield-alt"></i> Dette er et sterkt passord! Godt jobbet. Husk å bruke unike passord for hver tjeneste.</p>';
+                    }
+                    
+                    // Show result
+                    resultContainer.classList.add('active');
+                    resultContainer.innerHTML = message;
+                });
+            }
+            
+            // Dropdown functionality
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    parent.classList.toggle('active');
+                });
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            if (menuToggle && navMenu && menuOverlay) {
+                menuToggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    menuOverlay.classList.toggle('active');
+                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+                });
+                
+                menuOverlay.addEventListener('click', function() {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Sticky header
+            const header = document.getElementById('header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Form Submission with Formspree
+            const contactForm = document.getElementById('contactForm');
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = submitButton?.querySelector('.button-text');
+            const buttonLoading = submitButton?.querySelector('.button-loading');
+            const successMessage = document.getElementById('form-success');
+            const errorMessage = document.getElementById('form-error');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Show loading state
+                    if (submitButton && buttonText && buttonLoading) {
+                        submitButton.disabled = true;
+                        buttonText.style.display = 'none';
+                        buttonLoading.style.display = 'inline';
+                    }
+                    
+                    // Hide previous messages
+                    if (successMessage) successMessage.style.display = 'none';
+                    if (errorMessage) errorMessage.style.display = 'none';
+                    
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    
+                    try {
+                        // Submit to Formspree
+                        const response = await fetch('https://formspree.io/f/xzzakvpk', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            // Success
+                            if (successMessage) {
+                                successMessage.style.display = 'block';
+                                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                            contactForm.reset();
+                            
+                            // Optional: Send Google Analytics event
+                            if (typeof gtag !== 'undefined') {
+                                gtag('event', 'form_submit', {
+                                    'event_category': 'contact',
+                                    'event_label': 'sikkerhetstjenester_form'
+                                });
+                            }
+                            
+                        } else {
+                            // Server error
+                            throw new Error('Server responded with error');
+                        }
+                        
+                    } catch (error) {
+                        // Show error message
+                        if (errorMessage) {
+                            errorMessage.style.display = 'block';
+                            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        
+                        console.error('Form submission error:', error);
+                    } finally {
+                        // Reset button state
+                        if (submitButton && buttonText && buttonLoading) {
+                            submitButton.disabled = false;
+                            buttonText.style.display = 'inline';
+                            buttonLoading.style.display = 'none';
+                        }
+                    }
+                });
+                
+                // Optional: Auto-hide success message after 10 seconds
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                            if (successMessage && successMessage.style.display === 'block') {
+                                setTimeout(() => {
+                                    if (successMessage) successMessage.style.display = 'none';
+                                }, 10000);
+                            }
+                            if (errorMessage && errorMessage.style.display === 'block') {
+                                setTimeout(() => {
+                                    if (errorMessage) errorMessage.style.display = 'none';
+                                }, 15000);
+                            }
+                        }
+                    });
+                });
+                
+                if (successMessage) observer.observe(successMessage, { attributes: true });
+                if (errorMessage) observer.observe(errorMessage, { attributes: true });
+            }
+        });
+    </script>
+
